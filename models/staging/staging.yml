@@ -1,0 +1,114 @@
+
+version: 2
+
+models:
+    - name: customer
+      description: "Customers dimension"
+      columns:
+        - name: C_CUSTKEY
+          description: ""
+          tests:
+            - unique
+            - not_null
+        - name: C_NAME
+          description: ""
+        - name: C_ADDRESS
+          description: ""
+        - name: C_CITY
+          description: ""
+        - name: C_NATION
+          description: ""
+        - name: C_REGION
+          description: ""
+        - name: C_PHONE
+          description: ""
+        - name: C_MKTSEGMENT
+          description: ""                
+
+    - name: lineorder
+      description: "Order line"
+      columns:
+        - name: LO_ORDERKEY
+          description: ""
+          tests:
+            - unique
+            - not_null
+        - name: LO_LINENUMBER
+          description: ""
+        - name: LO_CUSTKEY
+          description: ""
+        - name: LO_PARTKEY
+          description: ""
+        - name: LO_SUPPKEY
+          description: ""
+        - name: LO_ORDERDATE
+          description: ""
+        - name: LO_ORDERPRIORITY
+          description: ""
+        - name: LO_SHIPPRIORITY
+          description: ""
+        - name: LO_QUANTITY
+          description: ""
+        - name: LO_EXTENDEDPRICE
+          description: ""
+        - name: LO_ORDTOTALPRICE
+          description: ""
+        - name: LO_DISCOUNT
+          description: ""
+        - name: LO_REVENUE
+          description: ""
+        - name: LO_SUPPLYCOST
+          description: ""
+        - name: LO_TAX
+          description: ""
+        - name: LO_COMMITDATE
+          description: ""
+        - name: LO_SHIPMODE
+          description: ""
+
+    - name: part
+      description: ""
+      columns:
+        - name: P_PARTKEY
+          description: ""
+          tests:
+            - unique
+            - not_null
+        - name: P_NAME
+          description: ""
+        - name: P_MFGR
+          description: ""
+        - name: P_CATEGORY
+          description: ""
+        - name: P_BRAND
+          description: ""
+        - name: P_COLOR
+          description: ""
+        - name: P_TYPE
+          description: ""
+        - name: P_SIZE
+          description: ""
+        - name: P_CONTAINER
+          description: ""
+
+    - name: supplier
+      description: ""
+      columns:
+        - name: S_SUPPKEY
+          description: ""
+          tests:
+            - unique
+            - not_null
+        - name: S_NAME
+          description: ""
+        - name: S_ADDRESS
+          description: ""
+        - name: S_CITY
+          description: ""
+        - name: S_NATION
+          description: ""
+        - name: S_REGION
+          description: ""
+        - name: S_PHONE
+          description: ""
+      

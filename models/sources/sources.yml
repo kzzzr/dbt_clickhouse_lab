@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+
+    - name: dbgen
+      database: dbt
+      schema: dbt
+      tags: ["dbgen"]      
+      # freshness:
+      #   warn_after: {count: 12, period: hour}
+      #   error_after: {count: 24, period: hour}
+      # loaded_at_field: created_at
+      loader: S3
+      description: "External tables"
+
+      tables:
+
+        - name: customer
+          description: "Customers source in S3 bucket"
+          identifier: src_customer
+
+        - name: lineorder
+          identifier: src_lineorder
+
+        - name: part
+          identifier: src_part
+
+        - name: supplier
+          identifier: src_supplier
