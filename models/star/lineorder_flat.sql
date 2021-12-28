@@ -8,11 +8,11 @@
 
 SELECT
 
-    {{ dbt_utils.surrogate_key(['LO_CUSTKEY', 'C_CUSTKEY', 'S_SUPPKEY']) }}
-    ,{{ dbt_utils.star(ref('lineorder')) }}
-    ,{{ dbt_utils.star(ref('customer')) }}
-    ,{{ dbt_utils.star(ref('supplier')) }}
-    ,{{ dbt_utils.star(ref('part')) }}
+    
+      {{ dbt_utils.star(ref('lineorder')) }}
+    , {{ dbt_utils.star(ref('customer')) }}
+    , {{ dbt_utils.star(ref('supplier')) }}
+    , {{ dbt_utils.star(ref('part')) }}
 
 FROM {{ ref('lineorder') }} AS l
 INNER JOIN {{ ref('customer') }} AS c ON c.C_CUSTKEY = l.LO_CUSTKEY

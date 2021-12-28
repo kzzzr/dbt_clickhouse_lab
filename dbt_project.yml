@@ -35,5 +35,9 @@ models:
     clickhouse_starschema:
       # Applies to all files under models/example/
         +materialized: table
-        # staging:
-        #     +materialized: view
+        staging:
+            +materialized: view
+            +tags: ['staging']
+        star:
+            +materialized: table
+            +tags: ['star']

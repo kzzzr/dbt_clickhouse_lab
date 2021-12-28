@@ -3,8 +3,8 @@ version: 2
 sources:
 
     - name: dbgen
-      database: dbt
-      schema: dbt
+      # database: db
+      schema: db
       tags: ["dbgen"]      
       # freshness:
       #   warn_after: {count: 12, period: hour}
