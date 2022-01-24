@@ -39,7 +39,7 @@
         ENGINE = S3('https://storage.yandexcloud.net/otus-dwh/dbgen/lineorder.tbl', 'CSV')
         ;
 
-        CREATE TABLE part
+        CREATE TABLE src_part
         (
                 P_PARTKEY       UInt32,
                 P_NAME          String,
@@ -54,7 +54,7 @@
         ENGINE = S3('https://storage.yandexcloud.net/otus-dwh/dbgen/part.tbl', 'CSV')
         ;
 
-        CREATE TABLE supplier
+        CREATE TABLE src_supplier
         (
                 S_SUPPKEY       UInt32,
                 S_NAME          String,

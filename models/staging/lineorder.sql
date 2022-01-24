@@ -6,4 +6,8 @@
     )
 }}
 
-select * from {{ source('dbgen', 'lineorder') }}
+select
+
+    {{ dbt_utils.star(source('dbgen', 'lineorder')) }}
+
+from {{ source('dbgen', 'lineorder') }}

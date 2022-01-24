@@ -4,8 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-dbt-clickhouse = "==0.20.0"
-dbt = "==0.20.0"
+dbt-clickhouse = "==1.0.0"
 
 [dev-packages]
 
