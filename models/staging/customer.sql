@@ -7,6 +7,6 @@
 
 select 
 
-  {{ dbt_utils.star(from=source('dbgen', 'customer')) }}
+    *
 
 from {{ source('dbgen', 'customer') }}

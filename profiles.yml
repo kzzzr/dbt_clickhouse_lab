@@ -1,0 +1,17 @@
+config:
+  send_anonymous_usage_stats: False
+  use_colors: True
+  partial_parse: True
+
+clickhouse_starschema:
+  outputs:
+    dev:
+      type: clickhouse
+      schema: default
+      host: "{{ env_var('DBT_HOST') }}"
+      port: 8443
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      secure: True
+      verify: False
+  target: dev

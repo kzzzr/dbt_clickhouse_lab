@@ -1,15 +1,50 @@
-Welcome to your new dbt project!
+# Development
 
-### Using the starter project
+1. Clone this repo & open with IDE (e.g. [VS Code](https://code.visualstudio.com/))
 
-Try running the following commands:
-- dbt run
-- dbt test
+2. Prepare your development credentials for Clickhouse:
 
+    - DBT_HOST
+    - DBT_USER
+    - DBT_PASSWORD
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](http://slack.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+3. Install dbt environment with [Docker](https://docs.docker.com/desktop/#download-and-install):
+
+    ```bash
+    docker-compose up -d # build & run container
+
+    docker-compose exec \
+        --env DBT_HOST='' \
+        --env DBT_USER='' \
+        --env DBT_PASSWORD='' \
+        dbt bash # execute dbt commands interactively
+    ```
+
+    <details><summary>Alternatively, install on local machine</summary>
+    <p>
+
+    [Install dbt](https://docs.getdbt.com/dbt-cli/install/overview) and [configure profile](https://docs.getdbt.com/dbt-cli/configure-your-profile) manually by yourself. By default, dbt expects the `profiles.yml` file to be located in the `~/.dbt/` directory.
+
+    Use this template and enter your own credentials:
+
+    ```yaml
+    config:
+        send_anonymous_usage_stats: False
+        use_colors: True
+        partial_parse: True
+
+    clickhouse_starschema:
+        target: dev
+        outputs:
+            dev:
+                type: clickhouse
+                schema: default
+                host: "{{ env_var('DBT_HOST') }}"
+                port: 8443
+                user: "{{ env_var('DBT_USER') }}"
+                password: "{{ env_var('DBT_PASSWORD') }}"
+                secure: True
+                verify: False
+    ```
+    </p>
+    </details>
