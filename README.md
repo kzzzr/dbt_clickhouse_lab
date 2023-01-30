@@ -14,9 +14,6 @@
     docker-compose up -d # build & run container
 
     docker-compose exec \
-        --env DBT_HOST='' \
-        --env DBT_USER='' \
-        --env DBT_PASSWORD='' \
         dbt bash # execute dbt commands interactively
     ```
 
