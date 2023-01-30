@@ -27,11 +27,14 @@ models:
 
     - name: lineorder
       description: "Order line"
+      tests:
+        - unique:
+            column_name: "(LO_ORDERKEY::TEXT || LO_LINENUMBER::TEXT)"
       columns:
         - name: LO_ORDERKEY
           description: ""
           tests:
-            - unique
+            # - unique
             - not_null
         - name: LO_LINENUMBER
           description: ""
