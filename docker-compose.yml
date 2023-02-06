@@ -1,7 +1,7 @@
 version: '2'
 services:
 
-  dbt:
+  dev:
     build: .
     volumes:
      - .:/usr/app/
