@@ -3,7 +3,6 @@ version: 2
 sources:
 
     - name: dbgen
-      # database: db
       schema: default
       tags: ["dbgen"]      
       # freshness:
@@ -11,19 +10,26 @@ sources:
       #   error_after: {count: 24, period: hour}
       # loaded_at_field: created_at
       loader: S3
-      description: "TPCH synthetic data as External Tables"
+      description: "TPCH synthetic data stored in S3"
 
       tables:
 
         - name: customer
-          description: "Customers source in S3 bucket"
+          description: "Customers dimension"
           identifier: src_customer
 
-        - name: lineorder
-          identifier: src_lineorder
+        - name: orders
+          description: "Orders facts"
+          identifier: src_orders
+
+        - name: lineitem
+          description: "Orders line items facts"
+          identifier: src_lineitem
 
         - name: part
+          description: "Parts dimension"
           identifier: src_part
 
         - name: supplier
+          description: "Suppliers dimension"
           identifier: src_supplier
