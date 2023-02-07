@@ -1,12 +1,9 @@
-# Development
+# Clickhouse + dbt: Starschema showcase
 
-1. Clone this repo & open with IDE (e.g. [VS Code](https://code.visualstudio.com/))
+⚠️ Attention! Always delete resources after you finish your work!
 
-2. Prepare your development credentials for Clickhouse:
 
-    - DBT_HOST
-    - DBT_USER
-    - DBT_PASSWORD
+## Assignment TODO
 
 - [ ] [Fork this repository]()
 - [ ] [Deploy Clickhouse](#1-deploy-clickhouse)
@@ -59,8 +56,7 @@
     export $(xargs <.env)
     ```
 
-    <details><summary>Alternatively, install on local machine</summary>
-    <p>
+1. Deploy using Terraform
 
     ```bash
     terraform init
