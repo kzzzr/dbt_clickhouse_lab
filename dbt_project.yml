@@ -38,6 +38,6 @@ models:
         staging:
             +materialized: table
             +tags: ['staging']
-        star:
+        marts:
             +materialized: table
-            +tags: ['star']
+            +tags: ['marts']

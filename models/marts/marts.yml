@@ -1,0 +1,12 @@
+
+version: 2
+
+models:
+    - name: lineorder_flat
+      description: Denormalized fact table
+      columns:
+        - name: L_ITEMKEY
+          description: ""
+          tests:
+            - unique
+            - not_null
