@@ -7,8 +7,8 @@ services:
      - .:/usr/app/
     ports:
       - 8080:8080
-    environment:
-      - DBT_HOST=${CLIKHOUSE_HOST}
-      - DBT_USER=admin
-      - DBT_PASSWORD=${CLIKHOUSE_PASSWORD}
+    # environment:
+      # - DBT_HOST=${CLICKHOUSE_HOST}
+      # - DBT_USER=admin
+      # - DBT_PASSWORD=${CLICKHOUSE_PASSWORD}
       
