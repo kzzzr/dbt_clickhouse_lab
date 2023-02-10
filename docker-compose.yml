@@ -11,4 +11,3 @@ services:
       - DBT_HOST=${CLICKHOUSE_HOST}
       - DBT_USER=${CLICKHOUSE_USER}
       - DBT_PASSWORD=${TF_VAR_clickhouse_password}
-      

@@ -187,6 +187,7 @@ Make sure the tests pass:
 dbt test -s f_orders_stats
 ```
 
+
 ## Shut down your cluster
 
 ⚠️ Attention! Always delete resources after you finish your work!
