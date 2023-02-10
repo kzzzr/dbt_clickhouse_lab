@@ -14,10 +14,10 @@ jobs:
   clickhouse:
     name: Clickhouse CI
     timeout-minutes: 15
-    env:
-      DBT_HOST: clickhouse
-      # DBT_USER: 
-      # DBT_PASSWORD:     
+    # env:
+      # DBT_HOST: clickhouse
+      # DBT_USER: default
+      # DBT_PASSWORD: ''   
     strategy:
       matrix:
         version: [22.8]      
@@ -39,16 +39,21 @@ jobs:
       - name: dbt debug
         uses: kzzzr/mybi-dbt-action@v4
         with:
-          command: dbt debug          
+          command: dbt debug --target ci
       - name: dbt deps
         uses: kzzzr/mybi-dbt-action@v4
         with:
-          command: dbt deps
+          command: dbt deps --target ci
+      - name: initialize sources
+        uses: kzzzr/mybi-dbt-action@v4
+        with:
+          command: dbt run-operation init_s3_sources --target ci
       - name: dbt build
         uses: kzzzr/mybi-dbt-action@v4
         with:
-          command: dbt build --full-refresh
+          command: dbt build --full-refresh --target ci
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         if: ${{ failure() }}
         timeout-minutes: 10
+        
