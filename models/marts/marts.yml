@@ -2,7 +2,7 @@
 version: 2
 
 models:
-    - name: lineorder_flat
+    - name: f_lineorder_flat
       description: Denormalized fact table
       columns:
         - name: L_ITEMKEY
