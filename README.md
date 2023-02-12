@@ -14,7 +14,6 @@
 - [ ] [Model read-optimized data mart](#6-model-read-optimized-data-mart)
 - [ ] [Create PR and make CI tests pass]()
 
-
 - [x] .gitignore (+ terraform)
 - [x] terraform return cluster host (don't hardcode)
 - [x] secrets handling (use .env)
@@ -154,16 +153,16 @@ DB::Exception: Syntax error (Multi-statements are not allowed)
 
 1. Prepare wide table (Data Mart)
 
-    Join all the tables into one [lineorder_flat](./models/):
+    Join all the tables into one [f_lineorder_flat](./models/):
 
     ```bash
-    dbt build -s lineorder_flat
+    dbt build -s f_lineorder_flat
     ```
 
     Pay attentions to models being tested for keys being unique, not null.
 ## 6. Model read-optimized Data Mart
 
-Turn the following SQL into [f_orders_stats](./models/marts/f_orders_stats.sql) dbt model:
+Turn the following SQL into dbt model [f_orders_stats](./models/marts/f_orders_stats.sql):
 
 ```sql
 SELECT
@@ -173,7 +172,7 @@ SELECT
     , count(DISTINCT O_ORDERKEY) AS num_orders
     , count(DISTINCT C_CUSTKEY) AS num_customers
     , sum(L_EXTENDEDPRICE * L_DISCOUNT) AS revenue
-FROM lineorder_flat
+FROM f_lineorder_flat
 WHERE 1=1
 GROUP BY
     toYear(O_ORDERDATE)
