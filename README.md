@@ -5,17 +5,21 @@
 
 ## Assignment TODO
 
+- [ ] [Fork this repository]()
+- [ ] [Deploy Clickhouse](#1-deploy-clickhouse)
+- [ ] [Configure Developer Environment](#2-configure-developer-environment)
+- [ ] [Check database connection](#3-check-database-connection)
+- [ ] [Stage data sources with dbt macro](#4-stage-data-sources-with-dbt-macro)
+- [ ] [Deploy DWH](#5-deploy-dwh)
+- [ ] [Model read-optimized data mart](#6-model-read-optimized-data-mart)
+- [ ] [Create PR and make CI tests pass]()
+
 - [x] .gitignore (+ terraform)
 - [x] terraform return cluster host (don't hardcode)
-- [ ] secrets handling
-- [ ] asciinema record
-- [ ] Test assinment using Github Actions
-
-
-How to pass assignment
-
-- [ ] One
-- [ ] Two
+- [x] secrets handling (use .env)
+- [ ] Github Codespace experience
+- [ ] Test assignment using Github Actions
+- [ ] ? asciinema record
 
 ## 1. Deploy Clickhouse
 
@@ -23,7 +27,24 @@ How to pass assignment
 
     ![](./docs/clickhouse_management_console.gif)
 
-1. Install yc CLI: [Getting started with the command-line interface by Yandex Cloud](https://cloud.yandex.com/en/docs/cli/quickstart#install)
+1. Install and configure `yc` CLI: [Getting started with the command-line interface by Yandex Cloud](https://cloud.yandex.com/en/docs/cli/quickstart#install)
+
+    ```bash
+    yc init
+    ```
+
+1. Populate `.env` file
+
+    `.env` is used to store secrets as environment variables.
+
+    Copy template file [.env.template](./.env.template) to `.env` file:
+    ```bash
+    cp .env.template .env
+    ```
+
+    Open file in editor and set your own values.
+
+    > ❗️ Never commit secrets to git    
 
 1. Set environment variables:
 
@@ -31,16 +52,12 @@ How to pass assignment
     export YC_TOKEN=$(yc iam create-token)
     export YC_CLOUD_ID=$(yc config get cloud-id)
     export YC_FOLDER_ID=$(yc config get folder-id)
+    export $(xargs <.env)
     ```
 
 1. Deploy using Terraform
 
-    - [EN] Reference: [Getting started with Terraform by Yandex Cloud](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
-    - [RU] Reference: [Начало работы с Terraform by Yandex Cloud](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart)
-
-
     ```bash
-    cd ./terraform
     terraform init
     terraform validate
     terraform fmt
@@ -48,23 +65,26 @@ How to pass assignment
     terraform apply
     ```
 
+    Store terraform output values as Environment Variables:
+    ```bash
+    export CLICKHOUSE_HOST=$(terraform output -raw clickhouse_host_fqdn)
+    ```
+
+    - [EN] Reference: [Getting started with Terraform by Yandex Cloud](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
+    - [RU] Reference: [Начало работы с Terraform by Yandex Cloud](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart)
 
 
-## 2. Configure developer environment
+## 2. Configure Developer Environment
 
 Install dbt environment with [Docker](https://docs.docker.com/desktop/#download-and-install):
 
 ```bash
-# set environment variables
-export DBT_HOST=$(terraform output -raw clickhouse_host_fqdn)
-export DBT_USER=admin
-export DBT_PASSWORD=$(terraform output -raw )
-
 # build & run container
+docker-compose build
 docker-compose up -d
 
 # alias docker exec command
-alias dev="docker-compose exec dev"
+alias dbt="docker-compose exec dev dbt"
 ```
 
 <details><summary>Alternatively, install dbt on local machine</summary>
@@ -78,15 +98,13 @@ Use this [template](./profiles.yml) and enter your own credentials.
 
 ## 3. Check database connection
 
-### dbt
+Make sure dbt can connect to your target database:
 
 ```bash
-dev dbt debug
+dbt debug
 ```
 
-### JDBC (DBeaver)
-
-[Configure DBeaver connection](https://cloud.yandex.ru/docs/managed-clickhouse/operations/connect#connection-ide):
+[Configure JDBC (DBeaver) connection](https://cloud.yandex.ru/docs/managed-clickhouse/operations/connect#connection-ide):
 
 ```
 port=8443
@@ -95,12 +113,17 @@ ssl=true
 sslrootcrt=<path_to_cert>
 ```
 
+If any errors check ENV values are present:
+```
+docker-compose exec dev env | grep DBT_
+```
+
 ## 4. Stage data sources with dbt macro
 
 Source data will be staged as EXTERNAL TABLES (S3) using dbt macro [init_s3_sources](./macros/init_s3_sources.sql):
 
 ```bash
-dev dbt run-operation init_s3_sources
+dbt run-operation init_s3_sources
 ```
 
 Statements will be run separately from a list to avoid error:
@@ -116,7 +139,7 @@ DB::Exception: Syntax error (Multi-statements are not allowed)
 1. Install dbt packages
 
     ```bash
-    dev dbt deps
+    dbt deps
     ```
 
 
@@ -130,31 +153,39 @@ DB::Exception: Syntax error (Multi-statements are not allowed)
 
 1. Prepare wide table (Data Mart)
 
-    Join all the tables into one [lineorder_flat](./models/):
+    Join all the tables into one [f_lineorder_flat](./models/):
 
     ```bash
-    dbt build -s lineorder_flat
+    dbt build -s f_lineorder_flat
     ```
 
     Pay attentions to models being tested for keys being unique, not null.
-## 6. Model read-optimized data marts
+## 6. Model read-optimized Data Mart
 
-See queries at: https://clickhouse.tech/docs/en/getting-started/example-datasets/star-schema/
-Possibly materialize results as new tables (views) with dbt
+Turn the following SQL into dbt model [f_orders_stats](./models/marts/f_orders_stats.sql):
 
-Push Git repo with dbt project to Github:
-- external tables to S3
-- sources.yml
-- base tabes
-- wide table
-- tests and docs for models
+```sql
+SELECT
+    toYear(O_ORDERDATE) AS O_ORDERYEAR
+    , O_ORDERSTATUS
+    , O_ORDERPRIORITY
+    , count(DISTINCT O_ORDERKEY) AS num_orders
+    , count(DISTINCT C_CUSTKEY) AS num_customers
+    , sum(L_EXTENDEDPRICE * L_DISCOUNT) AS revenue
+FROM f_lineorder_flat
+WHERE 1=1
+GROUP BY
+    toYear(O_ORDERDATE)
+    , O_ORDERSTATUS
+    , O_ORDERPRIORITY
+```
 
-https://clickhouse.tech/docs/en/getting-started/example-datasets/star-schema/
+Make sure the tests pass:
 
-Send results of queries: 
-- Q2.1
-- Q3.3
-- Q4.2
+```bash
+dbt test -s f_orders_stats
+```
+
 
 ## Shut down your cluster
 

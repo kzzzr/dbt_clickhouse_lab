@@ -14,4 +14,10 @@ clickhouse_starschema:
       password: "{{ env_var('DBT_PASSWORD') }}"
       secure: True
       verify: False
+    ci:
+      type: clickhouse
+      host: clickhouse
+      port: 8123
+      schema: default
+      threads: 4
   target: dev
