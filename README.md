@@ -2,6 +2,12 @@
 
 ⚠️ Attention! Always delete resources after you finish your work!
 
+Features:
+- [x] .gitignore (+ terraform)
+- [x] terraform return cluster host (don't hardcode)
+- [x] secrets handling (use .env)
+- [x] Test assignment using Github Actions
+- [x] Github Codespace experience
 
 ## Assignment TODO
 
@@ -9,17 +15,11 @@
 - [ ] [Deploy Clickhouse](#1-deploy-clickhouse)
 - [ ] [Configure Developer Environment](#2-configure-developer-environment)
 - [ ] [Check database connection](#3-check-database-connection)
-- [ ] [Stage data sources with dbt macro](#4-stage-data-sources-with-dbt-macro)
-- [ ] [Deploy DWH](#5-deploy-dwh)
-- [ ] [Model read-optimized data mart](#6-model-read-optimized-data-mart)
+- [ ] [Deploy DWH](#4-deploy-dwh)
+- [ ] [Model read-optimized data mart](#)
 - [ ] [Create PR and make CI tests pass]()
 
-- [x] .gitignore (+ terraform)
-- [x] terraform return cluster host (don't hardcode)
-- [x] secrets handling (use .env)
-- [x] Test assignment using Github Actions
-- [ ] Github Codespace experience
-- [ ] ? asciinema record
+
 
 ## 1. Deploy Clickhouse
 
@@ -66,8 +66,12 @@
     ```
 
     Store terraform output values as Environment Variables:
+
     ```bash
     export CLICKHOUSE_HOST=$(terraform output -raw clickhouse_host_fqdn)
+    export DBT_HOST=${CLICKHOUSE_HOST}
+    export DBT_USER=${CLICKHOUSE_USER}
+    export DBT_PASSWORD=${TF_VAR_clickhouse_password}
     ```
 
     - [EN] Reference: [Getting started with Terraform by Yandex Cloud](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
@@ -76,7 +80,20 @@
 
 ## 2. Configure Developer Environment
 
-Install dbt environment with [Docker](https://docs.docker.com/desktop/#download-and-install):
+You have got 3 options to set up:
+ 
+<details><summary>Start with GitHub Codespaces:</summary>
+<p>
+
+![GitHub Codespaces]()
+
+</p>
+</details>
+
+<details><summary>Install dbt environment with Docker:</summary>
+<p>
+
+Install [Docker](https://docs.docker.com/desktop/#download-and-install) and run commands:
 
 ```bash
 # build & run container
@@ -87,7 +104,10 @@ docker-compose up -d
 alias dbt="docker-compose exec dev dbt"
 ```
 
-<details><summary>Alternatively, install dbt on local machine</summary>
+</p>
+</details>
+
+<details><summary>Alternatively, install dbt on local machine:</summary>
 <p>
 
 [Install dbt](https://docs.getdbt.com/dbt-cli/install/overview) and [configure profile](https://docs.getdbt.com/dbt-cli/configure-your-profile) manually by yourself. By default, dbt expects the `profiles.yml` file to be located in the `~/.dbt/` directory.
@@ -118,23 +138,7 @@ If any errors check ENV values are present:
 docker-compose exec dev env | grep DBT_
 ```
 
-## 4. Stage data sources with dbt macro
-
-Source data will be staged as EXTERNAL TABLES (S3) using dbt macro [init_s3_sources](./macros/init_s3_sources.sql):
-
-```bash
-dbt run-operation init_s3_sources
-```
-
-Statements will be run separately from a list to avoid error:
-
-```
-DB::Exception: Syntax error (Multi-statements are not allowed)
-```
-
-## 5. Deploy DWH
-
-1. Describe sources in [sources.yml](./models/sources/sources.yml) files
+## 4. Deploy DWH
 
 1. Install dbt packages
 
@@ -142,6 +146,21 @@ DB::Exception: Syntax error (Multi-statements are not allowed)
     dbt deps
     ```
 
+1. Stage data sources with dbt macro
+
+    Source data will be staged as EXTERNAL TABLES (S3) using dbt macro [init_s3_sources](./macros/init_s3_sources.sql):
+
+    ```bash
+    dbt run-operation init_s3_sources
+    ```
+
+    Statements will be run separately from a list to avoid error:
+
+    ```
+    DB::Exception: Syntax error (Multi-statements are not allowed)
+    ```
+
+1. Describe sources in [sources.yml](./models/sources/sources.yml) files
 
 1. Build staging models:
 
@@ -160,7 +179,8 @@ DB::Exception: Syntax error (Multi-statements are not allowed)
     ```
 
     Pay attentions to models being tested for keys being unique, not null.
-## 6. Model read-optimized Data Mart
+
+## 5. Model read-optimized Data Mart
 
 Turn the following SQL into dbt model [f_orders_stats](./models/marts/f_orders_stats.sql):
 
@@ -183,8 +203,10 @@ GROUP BY
 Make sure the tests pass:
 
 ```bash
-dbt test -s f_orders_stats
+dbt build -s f_orders_stats
 ```
+
+## 6. Create PR and make CI tests pass
 
 
 ## Shut down your cluster
@@ -201,10 +223,9 @@ terraform destroy
 ## Lesson plan
 
 - [ ] Deploy Clickhouse
-- [ ] Init dbt project
-- [ ] Install environment – dbt + clickhouse dependency
-- [ ] Configure project (dbt_project)
-- [ ] Configure connection (profile)
+- [ ] Configure development environment
+- [ ] Configure dbt project (`dbt_project.yml`)
+- [ ] Configure connection (`profiles.yml`)
 - [ ] Prepare source data files (S3)
 - [ ] Configure EXTERNAL TABLES (S3)
 - [ ] Describe sources in .yml files
