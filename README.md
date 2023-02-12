@@ -1,25 +1,21 @@
-# Clickhouse + dbt: Starschema showcase
+# DWH powered by Clickhouse and dbt: Starschema showcase
 
 ⚠️ Attention! Always delete resources after you finish your work!
 
-Features:
-- [x] .gitignore (+ terraform)
-- [x] terraform return cluster host (don't hardcode)
-- [x] secrets handling (use .env)
-- [x] Test assignment using Github Actions
-- [x] Github Codespace experience
+- Deploy Infrastructure as Code with [Terraform](https://www.terraform.io/)
+- Build DWH powered by [Clickhouse](https://clickhouse.com/) and [dbt](https://www.getdbt.com/)
+- Automatic testing of assignment with [Github Actions](https://github.com/features/actions)
+- Instant development with [Github Codespaces](https://docs.github.com/en/codespaces)
 
 ## Assignment TODO
 
-- [ ] [Fork this repository]()
+- [ ] [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 - [ ] [Deploy Clickhouse](#1-deploy-clickhouse)
 - [ ] [Configure Developer Environment](#2-configure-developer-environment)
 - [ ] [Check database connection](#3-check-database-connection)
 - [ ] [Deploy DWH](#4-deploy-dwh)
-- [ ] [Model read-optimized data mart](#)
-- [ ] [Create PR and make CI tests pass]()
-
-
+- [ ] [Model read-optimized data mart](#5-model-read-optimized-data-mart)
+- [ ] [Create PR and make CI tests pass](#6-create-pr-and-make-ci-tests-pass)
 
 ## 1. Deploy Clickhouse
 
@@ -74,8 +70,9 @@ Features:
     export DBT_PASSWORD=${TF_VAR_clickhouse_password}
     ```
 
-    - [EN] Reference: [Getting started with Terraform by Yandex Cloud](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
-    - [RU] Reference: [Начало работы с Terraform by Yandex Cloud](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart)
+    [EN] Reference: [Getting started with Terraform by Yandex Cloud](https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-quickstart)
+    
+    [RU] Reference: [Начало работы с Terraform by Yandex Cloud](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart)
 
 
 ## 2. Configure Developer Environment
@@ -85,7 +82,7 @@ You have got 3 options to set up:
 <details><summary>Start with GitHub Codespaces:</summary>
 <p>
 
-![GitHub Codespaces]()
+![GitHub Codespaces](./docs/github_codespaces.png)
 
 </p>
 </details>
@@ -208,6 +205,7 @@ dbt build -s f_orders_stats
 
 ## 6. Create PR and make CI tests pass
 
+![Github Actions check passed](./docs/github_checks_passed.png)
 
 ## Shut down your cluster
 
