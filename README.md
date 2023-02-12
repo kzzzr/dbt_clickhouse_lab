@@ -17,8 +17,8 @@
 - [x] .gitignore (+ terraform)
 - [x] terraform return cluster host (don't hardcode)
 - [x] secrets handling (use .env)
+- [x] Test assignment using Github Actions
 - [ ] Github Codespace experience
-- [ ] Test assignment using Github Actions
 - [ ] ? asciinema record
 
 ## 1. Deploy Clickhouse
