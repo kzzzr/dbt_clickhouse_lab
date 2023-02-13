@@ -1,13 +1,13 @@
-# DWH powered by Clickhouse and dbt: Starschema showcase
+# DWH powered by Clickhouse and dbt
 
-⚠️ Attention! Always delete resources after you finish your work!
-
-- Deploy Infrastructure as Code with [Terraform](https://www.terraform.io/)
 - Build DWH powered by [Clickhouse](https://clickhouse.com/) and [dbt](https://www.getdbt.com/)
-- Automatic testing of assignment with [Github Actions](https://github.com/features/actions)
+- Deploy Infrastructure as Code with [Terraform](https://www.terraform.io/) and [Yandex.Cloud](https://cloud.yandex.com/en-ru/)
 - Instant development with [Github Codespaces](https://docs.github.com/en/codespaces)
+- Assignment checks with [Github Actions](https://github.com/features/actions)
 
 ## Assignment TODO
+
+⚠️ Attention! Always delete resources after you finish your work!
 
 - [ ] [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 - [ ] [Deploy Clickhouse](#1-deploy-clickhouse)
@@ -214,7 +214,6 @@ dbt build -s f_orders_stats
 ![image](https://user-images.githubusercontent.com/34193409/214896888-3c6db293-8f1c-4931-8277-b2e4137f30a3.png)
 
 ```bash
-cd ./terraform
 terraform destroy
 ```
 
