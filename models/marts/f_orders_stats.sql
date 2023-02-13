@@ -5,4 +5,5 @@
     )
 }}
 
-SELECT 1
+SELECT DISTINCT O_ORDERSTATUS
+FROM f_lineorder_flat
