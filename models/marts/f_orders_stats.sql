@@ -7,7 +7,7 @@
 }}
 
 SELECT
-    toYear(O_ORDERDATE) AS O_ORDERYEAR
+      toYear(O_ORDERDATE) AS O_ORDERYEAR
     , O_ORDERSTATUS
     , O_ORDERPRIORITY
     , count(DISTINCT O_ORDERKEY) AS num_orders
