@@ -10,14 +10,77 @@
 ⚠️ Attention! Always delete resources after you finish your work!
 
 - [ ] [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-- [ ] [Deploy Clickhouse](#1-deploy-clickhouse)
-- [ ] [Configure Developer Environment](#2-configure-developer-environment)
+- [ ] [Configure Developer Environment](#1-configure-developer-environment)
+- [ ] [Deploy Clickhouse](#2-deploy-clickhouse)
 - [ ] [Check database connection](#3-check-database-connection)
 - [ ] [Deploy DWH](#4-deploy-dwh)
 - [ ] [Model read-optimized data mart](#5-model-read-optimized-data-mart)
 - [ ] [Create PR and make CI tests pass](#6-create-pr-and-make-ci-tests-pass)
 
-## 1. Deploy Clickhouse
+## 1. Configure Developer Environment
+
+1. You have got 3 options to set up:
+ 
+    <details><summary>Start with GitHub Codespaces / Dev Container:</summary>
+    <p>
+
+    Open in Github Codespace:
+
+    ![GitHub Codespaces](./docs/github_codespaces.png)
+
+    Or open in a local Dev Container (VS Code):
+
+    ![Dev Container](./docs/dev_container.png)
+
+    </p>
+    </details>
+
+    <details><summary>Set up Docker containers manually:</summary>
+    <p>
+
+    Install [Docker](https://docs.docker.com/desktop/#download-and-install) and run commands:
+
+    ```bash
+    # build & run container
+    docker-compose build
+    docker-compose up -d
+
+    # alias docker exec command
+    alias dbt="docker-compose exec dev dbt"
+    ```
+
+    </p>
+    </details>
+
+    <details><summary>Alternatively, install on a local machine:</summary>
+    <p>
+
+    1. [Install dbt](https://docs.getdbt.com/dbt-cli/install/overview)
+
+        [Configure profile](https://docs.getdbt.com/dbt-cli/configure-your-profile) manually by yourself. By default, dbt expects the `profiles.yml` file to be located in the `~/.dbt/` directory. Use this [template](./profiles.yml) and enter your own credentials.
+
+    1. Intsall [yc CLI](https://cloud.yandex.com/en-ru/docs/cli/operations/install-cli)
+
+    1. Install [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+
+    </p>
+    </details>
+
+1. Populate `.env` file
+
+    `.env` is used to store secrets as environment variables.
+
+    Copy template file [.env.template](./.env.template) to `.env` file:
+    
+    ```bash
+    cp .env.template .env
+    ```
+
+    Open file in editor and set your own values.
+
+    > ❗️ Never commit secrets to git    
+
+## 2. Deploy Clickhouse
 
 1. Get familiar with Managed Clickhouse Management Console
 
@@ -28,19 +91,6 @@
     ```bash
     yc init
     ```
-
-1. Populate `.env` file
-
-    `.env` is used to store secrets as environment variables.
-
-    Copy template file [.env.template](./.env.template) to `.env` file:
-    ```bash
-    cp .env.template .env
-    ```
-
-    Open file in editor and set your own values.
-
-    > ❗️ Never commit secrets to git    
 
 1. Set environment variables:
 
@@ -74,44 +124,6 @@
     
     [RU] Reference: [Начало работы с Terraform by Yandex Cloud](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart)
 
-
-## 2. Configure Developer Environment
-
-You have got 3 options to set up:
- 
-<details><summary>Start with GitHub Codespaces:</summary>
-<p>
-
-![GitHub Codespaces](./docs/github_codespaces.png)
-
-</p>
-</details>
-
-<details><summary>Install dbt environment with Docker:</summary>
-<p>
-
-Install [Docker](https://docs.docker.com/desktop/#download-and-install) and run commands:
-
-```bash
-# build & run container
-docker-compose build
-docker-compose up -d
-
-# alias docker exec command
-alias dbt="docker-compose exec dev dbt"
-```
-
-</p>
-</details>
-
-<details><summary>Alternatively, install dbt on local machine:</summary>
-<p>
-
-[Install dbt](https://docs.getdbt.com/dbt-cli/install/overview) and [configure profile](https://docs.getdbt.com/dbt-cli/configure-your-profile) manually by yourself. By default, dbt expects the `profiles.yml` file to be located in the `~/.dbt/` directory.
-
-Use this [template](./profiles.yml) and enter your own credentials.
-</p>
-</details>
 
 ## 3. Check database connection
 
