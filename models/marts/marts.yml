@@ -10,3 +10,6 @@ models:
           tests:
             - unique
             - not_null
+            
+    - name: f_orders_stats
+      description: Denormalized fact table
