@@ -10,3 +10,11 @@ models:
           tests:
             - unique
             - not_null
+    - name: f_orders_stats
+      description: Modelling read-optimized data mart 
+      columns:
+        - name: num_orders
+          description: "Column num_orders"
+          tests:
+            - unique
+            - not_null
