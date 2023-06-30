@@ -10,3 +10,10 @@ models:
           tests:
             - unique
             - not_null
+    - name: f_orders_stats
+      description: Aggregation fact table
+      columns:
+        - name: O_ORDERYEAR
+          description: ""
+          tests:
+            - not_null

@@ -103,6 +103,7 @@
 
 1. Deploy using Terraform
 
+    cp terraformrc ~/.terraformrc
     ```bash
     terraform init
     terraform validate
