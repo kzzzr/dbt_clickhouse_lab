@@ -100,6 +100,7 @@
     export YC_FOLDER_ID=$(yc config get folder-id)
     export $(xargs <.env)
     ```
+cp terraformrc ~/.terraformrc
 
 1. Deploy using Terraform
 
