@@ -1,6 +1,6 @@
 {{
     config (
-      engine='MergeTree()',
+      engine='MergeTree()'
     )
 }}
 
