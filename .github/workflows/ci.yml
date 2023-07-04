@@ -20,7 +20,7 @@ jobs:
           - 9000:9000
           - 8123:8123
     container:
-      image: ghcr.io/kzzzr/airbyte_lab:ci
+      image: ghcr.io/kzzzr/dbt_clickhouse_lab:ci
     steps:
       - uses: actions/checkout@v3
       - run: dbt --version
