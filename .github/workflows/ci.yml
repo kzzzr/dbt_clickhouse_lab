@@ -3,57 +3,28 @@ name: Continuous Integration Tests
 on:
   pull_request:
     branches: [ main ]
-# env:
-  # DBT_PROJECT_DIR: integration_tests
 concurrency: 
   group: ${{ github.ref }}
   cancel-in-progress: true  
 
 jobs:
- 
-  clickhouse:
+
+  ci_test:
     name: Clickhouse CI
-    timeout-minutes: 15
-    # env:
-      # DBT_HOST: clickhouse
-      # DBT_USER: default
-      # DBT_PASSWORD: ''   
-    strategy:
-      matrix:
-        version: [22.8]      
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
     services:
       clickhouse:
-        image: clickhouse/clickhouse-server:${{ matrix.version }}
+        image: clickhouse/clickhouse-server:23.3
         ports:
           - 9000:9000
           - 8123:8123
-    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/kzzzr/airbyte_lab:ci
     steps:
       - uses: actions/checkout@v3
-      - name: wait for services to start up
-        run: sleep 10
-      - name: dbt version
-        uses: kzzzr/mybi-dbt-action@v4
-        with:
-          command: dbt --version
-      - name: dbt debug
-        uses: kzzzr/mybi-dbt-action@v4
-        with:
-          command: dbt debug --target ci
-      - name: dbt deps
-        uses: kzzzr/mybi-dbt-action@v4
-        with:
-          command: dbt deps --target ci
-      - name: initialize sources
-        uses: kzzzr/mybi-dbt-action@v4
-        with:
-          command: dbt run-operation init_s3_sources --target ci
-      - name: dbt build
-        uses: kzzzr/mybi-dbt-action@v4
-        with:
-          command: dbt build --full-refresh --target ci
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-        timeout-minutes: 10
-        
+      - run: dbt --version
+      - run: dbt debug --target ci
+      - run: dbt deps --target ci
+      - run: dbt run-operation init_s3_sources --target ci
+      - run: dbt build --target ci

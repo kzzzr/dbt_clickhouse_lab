@@ -5,73 +5,110 @@
 - Instant development with [Github Codespaces](https://docs.github.com/en/codespaces)
 - Assignment checks with [Github Actions](https://github.com/features/actions)
 
-## Assignment TODO
+## Lab plan
 
-⚠️ Attention! Always delete resources after you finish your work!
+- [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+- [Configure Developer Environment](#1-configure-developer-environment)
+- [Deploy Clickhouse](#2-deploy-clickhouse)
+- [Check database connection](#3-check-database-connection)
+- [Deploy DWH](#4-deploy-dwh)
+- [Model read-optimized data mart](#5-model-read-optimized-data-mart)
+- [Create PR and make CI tests pass](#6-create-pr-and-make-ci-tests-pass)
 
-- [ ] [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-- [ ] [Configure Developer Environment](#1-configure-developer-environment)
-- [ ] [Deploy Clickhouse](#2-deploy-clickhouse)
-- [ ] [Check database connection](#3-check-database-connection)
-- [ ] [Deploy DWH](#4-deploy-dwh)
-- [ ] [Model read-optimized data mart](#5-model-read-optimized-data-mart)
-- [ ] [Create PR and make CI tests pass](#6-create-pr-and-make-ci-tests-pass)
+
+- [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+- [Configure Developer Environment](#1-configure-developer-environment)
+    - Start with GitHub Codespaces
+    - Use devcontainer (locally)
+- [Deploy Infrastructure to Yandex.Cloud with Terraform](#2-deploy-infrastructure-to-yandexcloud-with-terraform)
+    - Get familiar with Yandex.Cloud web UI
+    - Configure `yc` CLI
+    - Populate `.env` file, Set environment variables
+    - Deploy using Terraform: Clickhouse
+- [Check database connection](#3-check-database-connection)
+    - Configure JDBC (DBeaver) connection
+    - Configure dbt connection
+- [Deploy DWH](#4-deploy-dwh)
+    - Install dbt packages
+    - Stage data sources with dbt macro
+    - Describe sources in [sources.yml](./models/sources/sources.yml) file
+    - Build staging models
+    - Prepare a data mart (wide table)
+- [Model read-optimized Data Mart](#5-model-read-optimized-data-mart)
+    - Turn SQL code into dbt model [f_orders_stats](./models/marts/f_orders_stats.sql)
+    - Open PR and trigger automated testing with Github Actions
+- [Delete cloud resources](#delete-cloud-resources)
+
 
 ## 1. Configure Developer Environment
 
-1. You have got 3 options to set up:
+
+You have got several options to set up:
  
-    <details><summary>Start with GitHub Codespaces / Dev Container:</summary>
-    <p>
+<details><summary>Start with GitHub Codespaces</summary>
+<p>
 
-    Open in Github Codespace:
+![GitHub Codespaces](./docs/github_codespaces.png)
 
-    ![GitHub Codespaces](./docs/github_codespaces.png)
+</p>
+</details>
 
-    Or open in a local Dev Container (VS Code):
+<details><summary>Use devcontainer (locally)</summary>
+<p>
 
-    ![Dev Container](./docs/dev_container.png)
+1. Install [Docker](https://docs.docker.com/desktop/#download-and-install) on your local machine.
 
-    </p>
-    </details>
+1. Install devcontainer CLI:
 
-    <details><summary>Set up Docker containers manually:</summary>
-    <p>
+    Open command palette (CMD + SHIFT+ P) type *Install devcontainer CLI*
 
-    Install [Docker](https://docs.docker.com/desktop/#download-and-install) and run commands:
+    ![](./docs/install_devcontainer_cli.png)
+
+1. Next build and open dev container:
 
     ```bash
-    # build & run container
-    docker-compose build
-    docker-compose up -d
+    # build dev container
+    devcontainer build .
 
-    # alias docker exec command
-    alias dbt="docker-compose exec dev dbt"
+    # open dev container
+    devcontainer open .
     ```
 
-    </p>
-    </details>
+</p>
+</details>
 
-    <details><summary>Alternatively, install on a local machine:</summary>
-    <p>
+Verify you are in a development container by running commands:
 
-    1. [Install dbt](https://docs.getdbt.com/dbt-cli/install/overview)
+```bash
+terraform -v
 
-        [Configure profile](https://docs.getdbt.com/dbt-cli/configure-your-profile) manually by yourself. By default, dbt expects the `profiles.yml` file to be located in the `~/.dbt/` directory. Use this [template](./profiles.yml) and enter your own credentials.
+yc --version
 
-    1. Intsall [yc CLI](https://cloud.yandex.com/en-ru/docs/cli/operations/install-cli)
+dbt --version
+```
 
-    1. Install [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+If any of these commands fails printing out used software version then you are probably running it on your local machine not in a dev container!
 
-    </p>
-    </details>
+## 2. Deploy Infrastructure to Yandex.Cloud with Terraform
+
+1. Get familiar with Yandex.Cloud web UI
+
+    We will deploy:
+    - [Yandex Managed Service for ClickHouse](https://cloud.yandex.com/en/services/managed-clickhouse)
+    
+    ![](./docs/clickhouse_management_console.gif)
+
+1. Configure `yc` CLI: [Getting started with the command-line interface by Yandex Cloud](https://cloud.yandex.com/en/docs/cli/quickstart#install)
+
+    ```bash
+    yc init
+    ```
 
 1. Populate `.env` file
 
     `.env` is used to store secrets as environment variables.
 
     Copy template file [.env.template](./.env.template) to `.env` file:
-    
     ```bash
     cp .env.template .env
     ```
@@ -80,17 +117,6 @@
 
     > ❗️ Never commit secrets to git    
 
-## 2. Deploy Clickhouse
-
-1. Get familiar with Managed Clickhouse Management Console
-
-    ![](./docs/clickhouse_management_console.gif)
-
-1. Install and configure `yc` CLI: [Getting started with the command-line interface by Yandex Cloud](https://cloud.yandex.com/en/docs/cli/quickstart#install)
-
-    ```bash
-    yc init
-    ```
 
 1. Set environment variables:
 
@@ -102,6 +128,14 @@
     ```
 
 1. Deploy using Terraform
+
+    Configure YC Terraform provider:
+    
+    ```bash
+    cp terraformrc ~/.terraformrc
+    ```
+
+    Get familiar with Cloud Infrastructure: [main.tf](./main.tf) and [variables.tf](./variables.tf)
 
     ```bash
     terraform init
@@ -124,14 +158,7 @@
     
     [RU] Reference: [Начало работы с Terraform by Yandex Cloud](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart)
 
-
 ## 3. Check database connection
-
-Make sure dbt can connect to your target database:
-
-```bash
-dbt debug
-```
 
 [Configure JDBC (DBeaver) connection](https://cloud.yandex.ru/docs/managed-clickhouse/operations/connect#connection-ide):
 
@@ -142,9 +169,20 @@ ssl=true
 sslrootcrt=<path_to_cert>
 ```
 
-If any errors check ENV values are present:
+![DBeaver + Clickhouse](./docs/clickhouse_dbeaver.png)
+
+Make sure dbt can connect to your target database:
+
+```bash
+dbt debug
 ```
-docker-compose exec dev env | grep DBT_
+
+![dbt + Clickhouse connection](./docs/dbt_debug.png)
+
+If any errors check ENV values are present:
+
+```bash
+env | grep DBT_
 ```
 
 ## 4. Deploy DWH
@@ -163,13 +201,13 @@ docker-compose exec dev env | grep DBT_
     dbt run-operation init_s3_sources
     ```
 
-    Statements will be run separately from a list to avoid error:
+    Statements will be executed one by one to avoid error:
 
     ```
     DB::Exception: Syntax error (Multi-statements are not allowed)
     ```
 
-1. Describe sources in [sources.yml](./models/sources/sources.yml) files
+1. Describe sources in [sources.yml](./models/sources/sources.yml) file
 
 1. Build staging models:
 
@@ -179,7 +217,7 @@ docker-compose exec dev env | grep DBT_
 
     Check model configurations: `engine`, `order_by`, `partition_by`
 
-1. Prepare wide table (Data Mart)
+1. Prepare a data mart (wide table)
 
     Join all the tables into one [f_lineorder_flat](./models/):
 
@@ -201,7 +239,7 @@ SELECT
     , count(DISTINCT O_ORDERKEY) AS num_orders
     , count(DISTINCT C_CUSTKEY) AS num_customers
     , sum(L_EXTENDEDPRICE * L_DISCOUNT) AS revenue
-FROM f_lineorder_flat
+FROM -- PLEASE USE dbt's ref('') to ensure valid DAG execution!
 WHERE 1=1
 GROUP BY
     toYear(O_ORDERDATE)
@@ -215,31 +253,20 @@ Make sure the tests pass:
 dbt build -s f_orders_stats
 ```
 
+![](./docs/f_orders_stats.png)
+
 ## 6. Create PR and make CI tests pass
+
+If it works from your terminal, commit, open PR and trigger automated testing with Github Actions
 
 ![Github Actions check passed](./docs/github_checks_passed.png)
 
-## Shut down your cluster
+## Delete cloud resources
 
-⚠️ Attention! Always delete resources after you finish your work!
+⚠️ Attention! Always delete cloud resources after you finished!
 
 ![image](https://user-images.githubusercontent.com/34193409/214896888-3c6db293-8f1c-4931-8277-b2e4137f30a3.png)
 
 ```bash
 terraform destroy
 ```
-
-## Lesson plan
-
-- [ ] Deploy Clickhouse
-- [ ] Configure development environment
-- [ ] Configure dbt project (`dbt_project.yml`)
-- [ ] Configure connection (`profiles.yml`)
-- [ ] Prepare source data files (S3)
-- [ ] Configure EXTERNAL TABLES (S3)
-- [ ] Describe sources in .yml files
-- [ ] Basic dbt models and configurations
-- [ ] Code compilation + debugging
-- [ ] Prepare STAR schema
-- [ ] Querying results
-- [ ] Testing & Documenting your project
