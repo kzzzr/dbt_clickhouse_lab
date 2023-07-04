@@ -10,3 +10,16 @@ models:
           tests:
             - unique
             - not_null
+    - name: f_orders_stats
+      description: Aggrageted mart for reporting needs
+      columns:
+        - name: O_ORDERYEAR
+          description: Year of orders
+          tests:
+            - not_null
+      columns:
+        - name: revenue
+          description: SUM of L_EXTENDEDPRICE multiplied by L_DISCOUNT
+          tests:
+            - dbt_utils.expression_is_true:
+                expression: "> 0"
