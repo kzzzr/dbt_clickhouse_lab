@@ -1,9 +1,11 @@
 {{
     config (
       engine='MergeTree()',
-      order_by=['']
+      order_by=['O_ORDERYEAR']
     )
 }}
+
+
 
 SELECT
     toYear(O_ORDERDATE) AS O_ORDERYEAR
