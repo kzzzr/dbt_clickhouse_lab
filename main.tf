@@ -18,7 +18,7 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
   sql_database_management = true
   sql_user_management     = true
   admin_password          = var.clickhouse_password
-  version                 = "23.3"
+  version                 = "22.8"
 
   clickhouse {
     resources {
