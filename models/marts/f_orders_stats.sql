@@ -18,3 +18,4 @@ GROUP BY
     toYear(O_ORDERDATE)
     , O_ORDERSTATUS
     , O_ORDERPRIORITY
+    
