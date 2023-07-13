@@ -8,10 +8,10 @@ clickhouse_starschema:
     dev:
       type: clickhouse
       schema: default
-      host: "{{ env_var('DBT_HOST') }}"
+      host: "rc1b-0f1hbob0aopaif4l.mdb.yandexcloud.net"
       port: 8443
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_PASSWORD') }}"
+      user: "admin"
+      password: "clickhouse"
       secure: True
       verify: False
     ci:
