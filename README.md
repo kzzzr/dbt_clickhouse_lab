@@ -9,15 +9,6 @@
 
 - [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 - [Configure Developer Environment](#1-configure-developer-environment)
-- [Deploy Clickhouse](#2-deploy-clickhouse)
-- [Check database connection](#3-check-database-connection)
-- [Deploy DWH](#4-deploy-dwh)
-- [Model read-optimized data mart](#5-model-read-optimized-data-mart)
-- [Create PR and make CI tests pass](#6-create-pr-and-make-ci-tests-pass)
-
-
-- [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-- [Configure Developer Environment](#1-configure-developer-environment)
     - Start with GitHub Codespaces
     - Use devcontainer (locally)
 - [Deploy Infrastructure to Yandex.Cloud with Terraform](#2-deploy-infrastructure-to-yandexcloud-with-terraform)
@@ -219,7 +210,7 @@ env | grep DBT_
 
 1. Prepare a data mart (wide table)
 
-    Join all the tables into one [f_lineorder_flat](./models/):
+    Join all the tables into one [f_lineorder_flat](./models/marts/f_lineorder_flat.sql):
 
     ```bash
     dbt build -s f_lineorder_flat
