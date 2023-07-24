@@ -2,12 +2,12 @@ ARG DBT_VERSION=1.0.0
 FROM fishtownanalytics/dbt:${DBT_VERSION}
 
 # Terraform configuration file
-ADD terraformrc root/.terraformrc
+# COPY terraformrc root/.terraformrc
 
 # Install utils
 RUN apt -y update \
     && apt -y upgrade \
-    && apt -y install curl wget unzip
+    && apt -y install curl wget gpg unzip
 
 # Install dbt adapter
 RUN set -ex \
@@ -24,9 +24,6 @@ RUN curl -sL https://hashicorp-releases.yandexcloud.net/terraform/${TERRAFORM_VE
     && unzip terraform.zip \
     && install -o root -g root -m 0755 terraform /usr/local/bin/terraform \
     && rm -rf terraform terraform.zip
-
-# Install Terraform
-
 
 
 # Set default directory for dbt profiles
