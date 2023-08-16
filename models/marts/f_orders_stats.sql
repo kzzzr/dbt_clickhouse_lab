@@ -12,7 +12,7 @@ SELECT
     , count(DISTINCT O_ORDERKEY) AS num_orders
     , count(DISTINCT C_CUSTKEY) AS num_customers
     , sum(L_EXTENDEDPRICE * L_DISCOUNT) AS revenue
-FROM -- PLEASE USE dbt's ref('') to ensure valid DAG execution!
+FROM {{ ref('stg_orders') }}
 WHERE 1=1
 GROUP BY
     toYear(O_ORDERDATE)
