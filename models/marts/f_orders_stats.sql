@@ -1,13 +1,6 @@
 {{
     config (
       engine='MergeTree()',
-      order_by=['']
-    )
-}}
-
-{{
-    config (
-      engine='MergeTree()',
       order_by=['O_ORDERYEAR']
     )
 }}
