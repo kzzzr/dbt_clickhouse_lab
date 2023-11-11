@@ -8,7 +8,7 @@
 {{
     config (
       engine='MergeTree()',
-      order_by=['']
+      order_by=['O_ORDERYEAR']
     )
 }}
 
