@@ -14,7 +14,7 @@ provider "yandex" {
 resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
   name                    = "clickhouse_starschema"
   environment             = "PRESTABLE"
-  network_id              = yandex_vpc_network.default_network.id
+  network_id              = "enphjr8ev8k6sevp1j0t"
   sql_database_management = true
   sql_user_management     = true
   admin_password          = var.clickhouse_password
@@ -137,24 +137,13 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
 
   host {
     type             = "CLICKHOUSE"
-    zone             = "ru-central1-b"
-    subnet_id        = yandex_vpc_subnet.foo.id
+    zone             = "ru-central1-a"
+    subnet_id        = "e9b5vk16dpb1cbpdd2s7"
     assign_public_ip = true
   }
 
-  cloud_storage {
-    enabled = false
-  }
 
   maintenance_window {
     type = "ANYTIME"
   }
-}
-
-resource "yandex_vpc_network" "default_network" {}
-
-resource "yandex_vpc_subnet" "foo" {
-  zone           = "ru-central1-b"
-  network_id     = yandex_vpc_network.default_network.id
-  v4_cidr_blocks = ["10.5.0.0/24"]
 }
