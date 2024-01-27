@@ -10,10 +10,11 @@ clickhouse_starschema:
       schema: default
       host: "{{ env_var('DBT_HOST') }}"
       port: 8443
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_PASSWORD') }}"
+      user: admin #"{{ env_var('DBT_USER') }}"
+      password: clickhouse
       secure: True
       verify: False
+      # socket_timeout: 300000
     ci:
       type: clickhouse
       host: clickhouse

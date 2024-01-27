@@ -6,6 +6,8 @@
     )
 }}
 
+
+with f_lo_f as (
 SELECT
 
       L_ITEMKEY
@@ -68,3 +70,6 @@ FROM {{ ref('stg_lineitem') }} AS l
     INNER JOIN {{ ref('stg_customer') }} AS c ON c.C_CUSTKEY = o.O_CUSTKEY
     INNER JOIN {{ ref('stg_supplier') }} AS s ON s.S_SUPPKEY = l.L_SUPPKEY
     INNER JOIN {{ ref('stg_part') }} AS p ON p.P_PARTKEY = l.L_PARTKEY
+)
+SELECT *
+  from f_lo_f
