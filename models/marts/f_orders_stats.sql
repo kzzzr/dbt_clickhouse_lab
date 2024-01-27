@@ -5,6 +5,9 @@
     )
 }}
 
+
+with f_o_s AS
+(
 SELECT
     toYear(O_ORDERDATE) AS O_ORDERYEAR
     , O_ORDERSTATUS
@@ -20,3 +23,6 @@ GROUP BY
     toYear(O_ORDERDATE)
     , O_ORDERSTATUS
     , O_ORDERPRIORITY
+)
+SELECT *
+  from f_o_s
