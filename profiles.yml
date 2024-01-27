@@ -12,14 +12,13 @@ clickhouse_starschema:
       port: 8443
       user: admin #"{{ env_var('DBT_USER') }}"
       password: clickhouse
-      #clickhouse #"{{ env_var('DBT_PASSWORD') }}"
       secure: True
       verify: False
       # socket_timeout: 300000
-    # ci:
-    #   type: clickhouse
-    #   host: clickhouse
-    #   port: 8123
-    #   schema: default
-    #   threads: 4
+    ci:
+      type: clickhouse
+      host: clickhouse
+      port: 8123
+      schema: default
+      threads: 4
   target: dev
