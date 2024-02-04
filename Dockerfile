@@ -5,8 +5,7 @@ FROM fishtownanalytics/dbt:${DBT_VERSION}
 # COPY terraformrc root/.terraformrc
 
 # Install utils
-RUN apt -y update \
-    && apt -y upgrade \
+RUN apt -y update --fix-missing \
     && apt -y install curl wget gpg unzip
 
 # Install dbt adapter

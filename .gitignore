@@ -42,3 +42,5 @@ terraform.rc
 .terraform.lock.hcl
 
 .DS_Store
+
+package-lock.yml
