@@ -1,0 +1,1 @@
+clickhouse_host_fqdn = "rc1b-vqs5egu9k28amiv0.mdb.yandexcloud.net"
