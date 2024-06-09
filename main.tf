@@ -18,7 +18,7 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
   sql_database_management = true
   sql_user_management     = true
   admin_password          = var.clickhouse_password
-  version                 = "23.3"
+  version                 = "23.8"
 
   clickhouse {
     resources {
@@ -39,21 +39,20 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
       timezone                        = "UTC"
       geobase_uri                     = ""
       query_log_retention_size        = 1073741824
-      query_log_retention_time        = 2592000
       query_thread_log_enabled        = true
       query_thread_log_retention_size = 536870912
-      query_thread_log_retention_time = 2592000
+
       part_log_retention_size         = 536870912
-      part_log_retention_time         = 2592000
+
       metric_log_enabled              = true
       metric_log_retention_size       = 536870912
-      metric_log_retention_time       = 2592000
+
       trace_log_enabled               = true
       trace_log_retention_size        = 536870912
-      trace_log_retention_time        = 2592000
+
       text_log_enabled                = true
       text_log_retention_size         = 536870912
-      text_log_retention_time         = 2592000
+
       text_log_level                  = "TRACE"
       background_pool_size            = 16
       background_schedule_pool_size   = 16
