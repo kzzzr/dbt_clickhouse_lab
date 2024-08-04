@@ -8,17 +8,22 @@ terraform {
 }
 
 provider "yandex" {
+  token              = "t1.9euelZqPjcudic6JlpeZlpKazJTGkO3rnpWalpDMioycm5jIz8jKnZ6Sjs_l9PdBBUNK-e8Dbwev3fT3ATRASvnvA28Hr83n9euelZqdjcjKiszMy5THl4_Kzcadju_8xeuelZqdjcjKiszMy5THl4_Kzcadjg.fCgEd3SWL-ehzJihzWkH_NNZDQQvRfMEenDT-PeHqJfAR1c3pOi3ydQmxLIEeI5cY75ngJ7sPPBqXL8-vCtJCA"
+  cloud_id           = "b1g38qb1ddfldjnj15m9"
+  folder_id          = "b1gcaq5kiuko0f1f02j4"
+  storage_access_key = "YCAJE8F0PQP6DUrWLKF-DQzkI"
+  storage_secret_key = "YCM1kZ4lXdVQWWouZ39wJmhYfgTH0JA0Ra2W1O9P"
+  zone               = "ru-central1-d"
 }
-
 
 resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
   name                    = "clickhouse_starschema"
-  environment             = "PRESTABLE"
+  environment             = "PRODUCTION"
   network_id              = yandex_vpc_network.default_network.id
   sql_database_management = true
   sql_user_management     = true
   admin_password          = var.clickhouse_password
-  version                 = "23.3"
+  version                 = "24.4"
 
   clickhouse {
     resources {
@@ -39,21 +44,21 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
       timezone                        = "UTC"
       geobase_uri                     = ""
       query_log_retention_size        = 1073741824
-      query_log_retention_time        = 2592000
+      query_log_retention_time        = 2592000000
       query_thread_log_enabled        = true
       query_thread_log_retention_size = 536870912
-      query_thread_log_retention_time = 2592000
+      query_thread_log_retention_time = 2592000000
       part_log_retention_size         = 536870912
-      part_log_retention_time         = 2592000
+      part_log_retention_time         = 2592000000
       metric_log_enabled              = true
       metric_log_retention_size       = 536870912
-      metric_log_retention_time       = 2592000
+      metric_log_retention_time       = 2592000000
       trace_log_enabled               = true
       trace_log_retention_size        = 536870912
-      trace_log_retention_time        = 2592000
+      trace_log_retention_time        = 2592000000
       text_log_enabled                = true
       text_log_retention_size         = 536870912
-      text_log_retention_time         = 2592000
+      text_log_retention_time         = 2592000000
       text_log_level                  = "TRACE"
       background_pool_size            = 16
       background_schedule_pool_size   = 16
@@ -137,7 +142,7 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
 
   host {
     type             = "CLICKHOUSE"
-    zone             = "ru-central1-b"
+    zone             = "ru-central1-d"
     subnet_id        = yandex_vpc_subnet.foo.id
     assign_public_ip = true
   }
@@ -150,11 +155,9 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse_starschema" {
     type = "ANYTIME"
   }
 }
-
 resource "yandex_vpc_network" "default_network" {}
-
 resource "yandex_vpc_subnet" "foo" {
-  zone           = "ru-central1-b"
+  zone           = "ru-central1-d"
   network_id     = yandex_vpc_network.default_network.id
   v4_cidr_blocks = ["10.5.0.0/24"]
 }

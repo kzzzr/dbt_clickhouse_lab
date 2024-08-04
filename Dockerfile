@@ -1,5 +1,5 @@
-ARG DBT_VERSION=1.0.0
-FROM fishtownanalytics/dbt:${DBT_VERSION}
+ARG DBT_VERSION=1.8.3
+FROM ghcr.io/dbt-labs/dbt-core:${DBT_VERSION}
 
 # Terraform configuration file
 # COPY terraformrc root/.terraformrc

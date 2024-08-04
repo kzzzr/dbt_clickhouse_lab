@@ -1,17 +1,12 @@
-config:
-  send_anonymous_usage_stats: False
-  use_colors: True
-  partial_parse: True
-
 clickhouse_starschema:
   outputs:
     dev:
       type: clickhouse
       schema: default
-      host: "{{ env_var('DBT_HOST') }}"
+      host: "rc1d-mb0nbushgtr6bvn8.mdb.yandexcloud.net"
       port: 8443
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_PASSWORD') }}"
+      user: "admin"
+      password: "jxtymlkbyysqgfhjkm"
       secure: True
       verify: False
     ci:
