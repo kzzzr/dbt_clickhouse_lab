@@ -8,10 +8,8 @@
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
 		"dockerfile": "../Dockerfile"
 	},
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		8080
@@ -19,8 +17,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"innoverio.vscode-dbt-power-user",
 				"ms-python.python",
+				"innoverio.vscode-dbt-power-user",
 				"eamodio.gitlens",
 				"GitHub.vscode-pull-request-github",
 				"nemesv.copy-file-name"
@@ -37,17 +35,17 @@
 			"userUid": "automatic",
 			"userGid": "automatic"
 		},
-		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
+		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {},
+		"ghcr.io/devcontainers-extra/features/terraform-asdf:2": {}
 	},
-
-    // "runArgs": ["--env-file",".env"]
-    
+	"runArgs": [
+		"--env-file",
+		".env"
+	]
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "cat /etc/os-release",
-
 	// Configure tool-specific properties.
 	// "customizations": {},
-
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "devcontainer"
 }
