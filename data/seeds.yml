@@ -1,0 +1,50 @@
+version: 2
+
+seeds:
+  - name: customers
+    config:
+      column_types:
+        C_CUSTKEY: Int64
+        C_NAME: String
+
+  - name: orders
+    config:
+      column_types:
+        O_ORDERKEY: Int64
+        O_CUSTKEY: Int64
+        O_ORDERDATE: Date
+        O_ORDERSTATUS: String
+        O_ORDERPRIORITY: String
+
+  - name: lineitems
+    config:
+      column_types:
+        L_ORDERKEY: Int64
+        L_EXTENDEDPRICE: Float64
+        L_DISCOUNT: Float64
+  
+  # НОВЫЙ БЛОК ДЛЯ PART
+  - name: part
+    config:
+      column_types:
+        P_PARTKEY: Int64
+        P_NAME: String
+        P_MFGR: String
+        P_BRAND: String
+        P_TYPE: String
+        P_SIZE: Int32
+        P_CONTAINER: String
+        P_RETAILPRICE: Float64
+        P_COMMENT: String
+
+  # НОВЫЙ БЛОК ДЛЯ SUPPLIER
+  - name: supplier
+    config:
+      column_types:
+        S_SUPPKEY: Int64
+        S_NAME: String
+        S_ADDRESS: String
+        S_NATIONKEY: Int64
+        S_PHONE: String
+        S_ACCTBAL: Float64
+        S_COMMENT: String

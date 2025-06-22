@@ -1,19 +1,10 @@
-{{
-    config (
-      engine='MergeTree()',
-      order_by=['O_ORDERKEY']
-    )
-}}
-
+-- models/staging/stg_orders.sql
 
 SELECT
-    O_ORDERKEY
-    , O_CUSTKEY
-    , O_ORDERSTATUS
-    , O_TOTALPRICE
-    , O_ORDERDATE
-    , O_ORDERPRIORITY
-    , O_CLERK
-    , O_SHIPPRIORITY
-    , O_COMMENT
-FROM {{ source('dbgen', 'orders') }}
+    O_ORDERKEY,
+    O_CUSTKEY,
+    O_ORDERDATE,
+    O_ORDERSTATUS,
+    O_ORDERPRIORITY
+FROM
+    {{ ref('orders') }}
