@@ -1,44 +1,34 @@
-
 version: 2
 
 models:
 
-    - name: stg_customer
-      columns:
-        - name: C_CUSTKEY
-          description: ""
-          tests:
-            - unique
-            - not_null
+  - name: stg_customer
+    columns:
+      - name: C_CUSTKEY
+        tests:
+          - unique
+          - not_null
 
-    - name: stg_orders
-      columns:
-        - name: O_ORDERKEY
-          description: ""
-          tests:
-            - unique
-            - not_null
+  - name: stg_orders
+    columns:
+      - name: O_ORDERKEY   # <-- ИСПРАВЛЕНО
+        tests:
+          - unique
+          - not_null
 
-    - name: stg_lineitem
-      columns:
-        - name: L_ITEMKEY
-          description: ""
-          tests:
-            - unique
-            - not_null
+  - name: stg_part
+    columns:
+      - name: P_PARTKEY
+        tests:
+          - unique
+          - not_null
 
-    - name: stg_part
-      columns:
-        - name: P_PARTKEY
-          description: ""
-          tests:
-            - unique
-            - not_null
-
-    - name: stg_supplier
-      columns:
-        - name: S_SUPPKEY
-          description: ""
-          tests:
-            - unique
-            - not_null
+  - name: stg_supplier
+    columns:
+      - name: S_SUPPKEY
+        tests:
+          - unique
+          - not_null
+          
+  # Для stg_lineitem мы не добавляем тесты, так как убрали из него все ключи.
+  - name: stg_lineitem
