@@ -1,6 +1,10 @@
 version: '2'
 services:
-
+  clickhouse:
+        image: clickhouse/clickhouse-server:23.3
+        ports:
+          - 9000:9000
+          - 8123:8123
   dev:
     build: .
     volumes:
