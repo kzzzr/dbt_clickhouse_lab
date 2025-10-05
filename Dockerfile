@@ -10,9 +10,14 @@ RUN apt -y update \
     && apt -y install curl wget gpg unzip
 
 # Install dbt adapter
+# RUN set -ex \
+#     && python -m pip install --upgrade pip setuptools \
+#     && python -m pip install --upgrade dbt-clickhouse
+
+# Install dbt adapter
 RUN set -ex \
-    && python -m pip install --upgrade pip setuptools \
-    && python -m pip install --upgrade dbt-clickhouse
+  && python -m pip install --upgrade pip setuptools packaging wheel \
+  && pip install "dbt-core==1.9.6" "dbt-clickhouse==1.9.3"    
 
 # Install yc CLI
 RUN curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | \
