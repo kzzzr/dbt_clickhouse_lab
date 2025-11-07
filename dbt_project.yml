@@ -3,7 +3,7 @@
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
 name: 'clickhouse_starschema'
-version: '1.0.0'
+version: '1.3.0'
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
@@ -24,7 +24,10 @@ clean-targets:         # directories to be removed by `dbt clean`
     - "target"
     - "dbt_modules"
 
-
+flags:
+ send_anonymous_usage_stats: False
+ use_colors: True
+ partial_parse: True
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 

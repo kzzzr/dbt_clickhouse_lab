@@ -13,7 +13,8 @@
                 C_MKTSEGMENT    LowCardinality(String),
                 C_COMMENT       String   
         )
-        ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/customer.tbl\', \'CustomSeparated\')
+        -- ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/customer.tbl\', \'CustomSeparated\')
+        ENGINE = S3(\'https://storage.yandexcloud.net/ch-data-course/customer.tbl\', \'CustomSeparated\')
         SETTINGS
             format_custom_field_delimiter=\'|\'
             ,format_custom_escaping_rule=\'CSV\'
@@ -32,7 +33,8 @@
             O_SHIPPRIORITY           UInt8,  
             O_COMMENT               String
         )
-        ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/orders.tbl\', \'CustomSeparated\')
+        -- ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/orders.tbl\', \'CustomSeparated\')
+        ENGINE = S3(\'https://storage.yandexcloud.net/ch-data-course/orders.tbl\', \'CustomSeparated\')
         SETTINGS
             format_custom_field_delimiter=\'|\'
             ,format_custom_escaping_rule=\'CSV\'
@@ -58,7 +60,8 @@
             L_SHIPMODE             LowCardinality(String),
             L_COMMENT               String
         )
-        ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/lineitem.tbl\', \'CustomSeparated\')
+        -- ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/lineitem.tbl\', \'CustomSeparated\')
+        ENGINE = S3(\'https://storage.yandexcloud.net/ch-data-course/lineitem.tbl\', \'CustomSeparated\')
         SETTINGS
             format_custom_field_delimiter=\'|\'
             ,format_custom_escaping_rule=\'CSV\'
@@ -77,7 +80,8 @@
                 P_RETAILPRICE       Decimal(15,2),
                 P_COMMENT       String
         )
-        ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/part.tbl\', \'CustomSeparated\')
+        -- ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/part.tbl\', \'CustomSeparated\')
+        ENGINE = S3(\'https://storage.yandexcloud.net/ch-data-course/part.tbl\', \'CustomSeparated\')
         SETTINGS
             format_custom_field_delimiter=\'|\'
             ,format_custom_escaping_rule=\'CSV\'
@@ -94,7 +98,8 @@
                 S_ACCTBAL       Decimal(15,2),
                 S_COMMENT       String
         )
-        ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/supplier.tbl\', \'CustomSeparated\')
+        -- ENGINE = S3(\'https://storage.yandexcloud.net/otus-dwh/tpch-dbgen-1g/supplier.tbl\', \'CustomSeparated\')
+        ENGINE = S3(\'https://storage.yandexcloud.net/ch-data-course/supplier.tbl\', \'CustomSeparated\')
         SETTINGS
             format_custom_field_delimiter=\'|\'
             ,format_custom_escaping_rule=\'CSV\'

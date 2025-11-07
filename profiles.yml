@@ -1,23 +1,49 @@
-config:
-  send_anonymous_usage_stats: False
-  use_colors: True
-  partial_parse: True
+# config:
+#   send_anonymous_usage_stats: False
+#   use_colors: True
+#   partial_parse: True
 
-clickhouse_starschema:
-  outputs:
-    dev:
-      type: clickhouse
-      schema: default
-      host: "{{ env_var('DBT_HOST') }}"
-      port: 8443
-      user: "{{ env_var('DBT_USER') }}"
-      password: "{{ env_var('DBT_PASSWORD') }}"
-      secure: True
-      verify: False
-    ci:
-      type: clickhouse
-      host: clickhouse
-      port: 8123
-      schema: default
-      threads: 4
-  target: dev
+# clickhouse_starschema:
+#   outputs:
+#     ci:
+#       type: clickhouse
+#       schema: default
+#       host: "{{ env_var('DBT_HOST') }}"
+#       port: 8443
+#       user: "{{ env_var('DBT_USER') }}"
+#       password: "{{ env_var('DBT_PASSWORD') }}"
+#       secure: True
+#       verify: False
+#     dev:
+#       type: clickhouse
+#       host: rc1b-j78409tph0ub2ivb.mdb.yandexcloud.net
+#       port: 8123
+#       schema: default
+#       threads: 4
+#       user: "{{ env_var('DBT_USER') }}"
+#       password: "{{ env_var('DBT_PASSWORD') }}"
+#       secure: true
+#       sslrootcert: /path/to/YandexRootCA.pem
+#       socket_timeout: 300000
+#   target: dev
+
+
+  clickhouse_starschema:
+    outputs:
+      dev:
+        type: clickhouse
+        host: rc1b-j78409tph0ub2ivb.mdb.yandexcloud.net
+        port: 8443
+        user: "admin"
+        password: "daniil05"
+        schema: default
+        verify: false
+        secure: true
+        sslrootcert: /root/YandexRootCA.pem
+      ci:
+        type: clickhouse
+        host: clickhouse
+        port: 8123
+        schema: default
+        threads: 4
+    target: dev
