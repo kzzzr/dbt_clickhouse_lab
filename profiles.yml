@@ -1,7 +1,7 @@
 config:
-  send_anonymous_usage_stats: False
-  use_colors: True
-  partial_parse: True
+  # send_anonymous_usage_stats: False
+  # use_colors: True
+  # partial_parse: True
 
 clickhouse_starschema:
   outputs:
